@@ -56,11 +56,16 @@ for i = 1:m
    X_train = X(1:i, :);
    y_train = y(1:i, :);
    theta_train = trainLinearReg(X_train, y_train, lambda);
-   [J_train, grad_train] = linearRegCostFunction(X_train, y_train, theta_train, lambda);
+
+   # set λ to 0 only when using it to compute the training error and cross validation error
+   [J_train, grad_train] = linearRegCostFunction(...
+       X_train, y_train, theta_train, 0);
 
    error_train(i) = J_train;
 
-   [J_cv, grad_cv] = linearRegCostFunction(Xval, yval, theta_train, lambda);
+   # set λ to 0 only when using it to compute the training error and cross validation error
+   [J_cv, grad_cv] = linearRegCostFunction(...
+       Xval, yval, theta_train, 0);
 
    error_val(i) = J_cv;
 end;
